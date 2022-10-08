@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class ExampleSubsystem extends SubsystemBase {
 
@@ -20,11 +21,12 @@ public class ExampleSubsystem extends SubsystemBase {
 
   /** Creates a new ExampleSubsystem. */
   public ExampleSubsystem() {
-    motor1 = new WPI_TalonFX(1);
-    motor2 = new WPI_TalonFX(2);
-    motor3 = new WPI_TalonFX(3);
-    smacka2 = new DigitalInput(2);
-    motor4 = new WPI_TalonFX(4);
+  
+    motor1 = new WPI_TalonFX(Constants.motor1ID);
+    motor2 = new WPI_TalonFX(Constants.motor2ID);
+    motor3 = new WPI_TalonFX(Constants.motor3ID);
+    motor4 = new WPI_TalonFX(Constants.motor4ID);
+
     smacka1 = new DigitalInput(2);
   }
 
