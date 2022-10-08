@@ -36,6 +36,7 @@ public class ExampleSubsystem extends SubsystemBase {
   public void Stop() {
     motor1.stopMotor();
     motor2.stopMotor();
+    motor3.stopMotor();
   }
 
   @Override
