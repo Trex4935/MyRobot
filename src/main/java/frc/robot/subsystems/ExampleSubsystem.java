@@ -5,6 +5,8 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ExampleSubsystem extends SubsystemBase {
@@ -12,12 +14,14 @@ public class ExampleSubsystem extends SubsystemBase {
   WPI_TalonFX motor1;
   WPI_TalonFX motor2;
   WPI_TalonFX motor3;
+  DigitalInput smacka1;
 
   /** Creates a new ExampleSubsystem. */
   public ExampleSubsystem() {
     motor1 = new WPI_TalonFX(1);
     motor2 = new WPI_TalonFX(2);
     motor3 = new WPI_TalonFX(3);
+    smacka1 = new DigitalInput(2);
   }
 
   // Moves the robot forwards
