@@ -11,11 +11,13 @@ public class ExampleSubsystem extends SubsystemBase {
 
   WPI_TalonFX motor1;
   WPI_TalonFX motor2;
+  WPI_TalonFX motor3;
 
   /** Creates a new ExampleSubsystem. */
   public ExampleSubsystem() {
     motor1 = new WPI_TalonFX(1);
     motor2 = new WPI_TalonFX(2);
+    motor3 = new WPI_TalonFX(3);
   }
 
   // Moves the robot forwards
