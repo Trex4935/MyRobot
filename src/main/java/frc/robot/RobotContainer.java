@@ -50,11 +50,11 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    // A
-    new JoystickButton(controller, XboxController.Button.kA.value).whenHeld(new c_Forward(m_exampleSubsystem));
-
     // B
-    new JoystickButton(controller, XboxController.Button.kB.value).whenHeld(new c_Backwards(m_exampleSubsystem));
+    new JoystickButton(controller, XboxController.Button.kB.value).whenHeld(new c_Forward(m_exampleSubsystem));
+
+    // A
+    new JoystickButton(controller, XboxController.Button.kA.value).whenHeld(new c_Backwards(m_exampleSubsystem));
 
   }
 
