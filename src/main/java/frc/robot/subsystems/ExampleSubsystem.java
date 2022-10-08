@@ -15,15 +15,18 @@ public class ExampleSubsystem extends SubsystemBase {
   WPI_TalonFX motor1;
   WPI_TalonFX motor2;
   WPI_TalonFX motor3;
+  DigitalInput smacka2;
   WPI_TalonFX motor4;
   DigitalInput smacka1;
 
   /** Creates a new ExampleSubsystem. */
   public ExampleSubsystem() {
+  
     motor1 = new WPI_TalonFX(Constants.motor1ID);
     motor2 = new WPI_TalonFX(Constants.motor2ID);
     motor3 = new WPI_TalonFX(Constants.motor3ID);
     motor4 = new WPI_TalonFX(Constants.motor4ID);
+
     smacka1 = new DigitalInput(2);
   }
 
