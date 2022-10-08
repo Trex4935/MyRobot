@@ -22,7 +22,7 @@ public class ExampleSubsystem extends SubsystemBase {
     motor1 = new WPI_TalonFX(1);
     motor2 = new WPI_TalonFX(2);
     motor3 = new WPI_TalonFX(3);
-    motor4 = new WPI_TalonFX(4)
+    motor4 = new WPI_TalonFX(4);
     smacka1 = new DigitalInput(2);
   }
 
