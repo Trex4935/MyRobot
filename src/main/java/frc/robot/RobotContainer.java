@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.PS4Controller.Button;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.c_Backwards;
 import frc.robot.commands.c_Forward;
+import frc.robot.commands.c_IfSmacknaForward;
 import frc.robot.commands.c_smackago;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -55,7 +56,9 @@ public class RobotContainer {
     new JoystickButton(controller, XboxController.Button.kB.value).whenHeld(new c_Forward(m_exampleSubsystem));
 
     // A
-    new JoystickButton(controller, XboxController.Button.kA.value).whenHeld(new c_Backwards(m_exampleSubsystem));
+    // new JoystickButton(controller, XboxController.Button.kA.value).whenHeld(new
+    // c_Backwards(m_exampleSubsystem));
+    new JoystickButton(controller, XboxController.Button.kA.value).whenHeld(new c_IfSmacknaForward(m_exampleSubsystem));
 
     // Y
     new JoystickButton(controller, XboxController.Button.kY.value).whenPressed(new c_smackago(m_exampleSubsystem));
