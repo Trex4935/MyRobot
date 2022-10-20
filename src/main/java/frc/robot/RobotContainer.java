@@ -11,7 +11,9 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.c_Backwards;
 import frc.robot.commands.c_Forward;
 import frc.robot.commands.c_IfSmacknaForward;
+import frc.robot.commands.c_driveWithController;
 import frc.robot.commands.c_smackago;
+import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -26,10 +28,13 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
 
-  // Creating the subsystems
+  // Subsystems
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final Drivetrain driveTrain;
+
+  // Commands
+  private final c_driveWithController driveWithController;
 
   // Controller
   private static XboxController controller = new XboxController(0);
@@ -38,6 +43,18 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    //Subsystems
+    driveTrain = new Drivetrain();
+
+    // Commands
+
+    driveWithController = new c_driveWithController(driveTrain,controller);
+
+    // Defaults
+    driveTrain.setDefaultCommand(driveWithController);
+
+
+    
     // Configure the button bindings
     configureButtonBindings();
   }
