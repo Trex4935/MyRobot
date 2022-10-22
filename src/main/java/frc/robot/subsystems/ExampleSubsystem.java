@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class ExampleSubsystem extends SubsystemBase {
 
@@ -19,10 +20,10 @@ public class ExampleSubsystem extends SubsystemBase {
 
   /** Creates a new ExampleSubsystem. */
   public ExampleSubsystem() {
-    motor1 = new WPI_TalonFX(1);
+    motor1 = new WPI_TalonFX(Constants.motor1ID);
     motor2 = new WPI_TalonFX(2);
     motor3 = new WPI_TalonFX(3);
-    motor4 = new WPI_TalonFX(4)
+    motor4 = new WPI_TalonFX(4);
     smacka1 = new DigitalInput(2);
   }
 
@@ -30,12 +31,16 @@ public class ExampleSubsystem extends SubsystemBase {
   public void Forward() {
     motor1.set(0.5);
     motor2.set(0.5);
+    motor3.set(0.5);
+    motor4.set(0.5);
   }
 
   // Moves the robot backwards
   public void Backwards() {
     motor1.set(-0.5);
     motor2.set(-0.5);
+    motor3.set(-0.5);
+    motor4.set(-0.5);
   }
 
   // Stops the Robot
@@ -43,6 +48,7 @@ public class ExampleSubsystem extends SubsystemBase {
     motor1.stopMotor();
     motor2.stopMotor();
     motor3.stopMotor();
+    motor4.stopMotor();
   }
 
   @Override
