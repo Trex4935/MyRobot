@@ -15,6 +15,7 @@ public class ExampleSubsystem extends SubsystemBase {
   WPI_TalonFX motor1;
   WPI_TalonFX motor2;
   WPI_TalonFX motor3;
+  DigitalInput smacka2;
   WPI_TalonFX motor4;
   DigitalInput smacka1;
 
@@ -23,8 +24,9 @@ public class ExampleSubsystem extends SubsystemBase {
     motor1 = new WPI_TalonFX(Constants.motor1ID);
     motor2 = new WPI_TalonFX(2);
     motor3 = new WPI_TalonFX(3);
+    smacka2 = new DigitalInput(2);
     motor4 = new WPI_TalonFX(4);
-    smacka1 = new DigitalInput(2);
+    smacka1 = new DigitalInput(1);
   }
 
   // Moves the robot forwards
@@ -41,6 +43,12 @@ public class ExampleSubsystem extends SubsystemBase {
     motor2.set(-0.5);
     motor3.set(-0.5);
     motor4.set(-0.5);
+  }
+
+  public boolean detectSmakna() {
+    boolean smaknaTrue = smacka1.get();
+
+    return !smaknaTrue;
   }
 
   // Stops the Robot
