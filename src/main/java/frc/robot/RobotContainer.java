@@ -43,18 +43,16 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    //Subsystems
+    // Subsystems
     driveTrain = new Drivetrain();
 
     // Commands
 
-    driveWithController = new c_driveWithController(driveTrain,controller);
+    driveWithController = new c_driveWithController(driveTrain, controller);
 
     // Defaults
     driveTrain.setDefaultCommand(driveWithController);
 
-
-    
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -70,15 +68,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     // B
-    new JoystickButton(controller, XboxController.Button.kB.value).whenHeld(new c_Forward(m_exampleSubsystem));
-
-    // A
-    // new JoystickButton(controller, XboxController.Button.kA.value).whenHeld(new
-    // c_Backwards(m_exampleSubsystem));
-    new JoystickButton(controller, XboxController.Button.kA.value).whenHeld(new c_IfSmacknaForward(m_exampleSubsystem));
-
-    // Y
-    new JoystickButton(controller, XboxController.Button.kY.value).whenPressed(new c_smackago(m_exampleSubsystem));
+    // new JoystickButton(controller, XboxController.Button.kB.value).whenHeld(new
+    // c_Forward(m_exampleSubsystem));
 
   }
 

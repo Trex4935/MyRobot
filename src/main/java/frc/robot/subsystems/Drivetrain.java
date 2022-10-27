@@ -5,11 +5,13 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.SPI;
 import frc.robot.Constants;
 
 public class Drivetrain extends SubsystemBase {
@@ -23,6 +25,8 @@ public class Drivetrain extends SubsystemBase {
 
   DifferentialDrive diffDrive;
 
+  public static AHRS ahrs;
+
   /** Creates a new Drivetrain. */
   public Drivetrain() {
 
@@ -34,43 +38,53 @@ public class Drivetrain extends SubsystemBase {
     leftmotors = new MotorControllerGroup(dtfrontleftmotor, dtbackleftmotor);
     rightmotors = new MotorControllerGroup(dtfrontrightmotor, dtbackrightmotor);
 
-    diffDrive = new DifferentialDrive(leftmotors,rightmotors);
-    
+    diffDrive = new DifferentialDrive(leftmotors, rightmotors);
 
-
+    ahrs = new AHRS(SPI.Port.kMXP);
+    ahrs.calibrate();
+    ahrs.reset();
 
   }
 
-/**
- * Method that drives forward at same speed
- * @param speed
- */  
-public void driveForward(int speed){
+  /**
+   * Method that drives forward at same speed
+   * 
+   * @param speed
+   */
+  public void driveForward(int speed) {
 
-  diffDrive.tankDrive(speed, speed);
+    diffDrive.tankDrive(speed, speed);
 
-}
-/**
- * This method controls the robot using the joystick
- * @param controller
- */
-public void driveWithController(XboxController controller){
+  }
 
+  /**
+   * This method controls the robot using the joystick
+   * 
+   * @param controller
+   */
+  public void driveWithController(XboxController controller) {
 
-  diffDrive.tankDrive((controller.getRawAxis(Constants.leftAxisID))*Constants.dtMaxSpeed, (controller.getRawAxis(Constants.rightAxisID))*Constants.dtMaxSpeed);
-}
+    diffDrive.tankDrive((controller.getRawAxis(Constants.leftAxisID)) * Constants.dtMaxSpeed,
+        (controller.getRawAxis(Constants.rightAxisID)) * Constants.dtMaxSpeed);
+  }
 
-/**
- * This methods stops all motors
- */
-public void stopMotors(){
-  leftmotors.set(0);
-  rightmotors.set(0);
-}
+  /**
+   * This methods stops all motors
+   */
+  public void stopMotors() {
+    leftmotors.set(0);
+    rightmotors.set(0);
+  }
 
+  // Gets angle from gyro and returns it
+  public double getAngle() {
+    double angle = ahrs.getAngle();
+    return angle;
+  }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    System.out.println(getAngle());
   }
 }
