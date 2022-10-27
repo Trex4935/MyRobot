@@ -82,9 +82,60 @@ public class Drivetrain extends SubsystemBase {
     return angle;
   }
 
+/**
+ * This method reset encoders
+ */
+  public void resetEncoder(){
+    dtfrontleftmotor.setSelectedSensorPosition(0);
+    dtfrontrightmotor.setSelectedSensorPosition(0);
+    dtbackleftmotor.setSelectedSensorPosition(0);
+    dtbackrightmotor.setSelectedSensorPosition(0);
+  }
+/**
+ * This methods gives back encoder position.
+ * @param selectedEncoder
+ * @return value of selected encoder
+ */
+  public double getEncoderAngle( double selectedEncoder ){
+    if (selectedEncoder == Constants.dtfrontleftmotorID) {
+      return dtfrontleftmotor.getSelectedSensorPosition();
+    } else if (selectedEncoder == Constants.dtfrontleftmotorID) {
+      return dtfrontrightmotor.getSelectedSensorPosition();
+    } else if (selectedEncoder == Constants.dtfrontleftmotorID) {
+      return dtbackleftmotor.getSelectedSensorPosition();
+    } else if (selectedEncoder == Constants.dtfrontleftmotorID) {
+      return dtbackrightmotor.getSelectedSensorPosition();
+    } else {
+      return 0;
+    }
+
+  }
+
+   // Takes the rotation or internal ticks of Falcon Encoder and turn them to a
+  // travel distance. gear ratio A:1 means, 1/A.
+  public double ticksToAngle(double ticks, double gearRatio) {
+    double nbTurnMotor = ticks / Constants.encoderTicksPerTurn;
+    double nbTurnWheel = nbTurnMotor * gearRatio;
+    double angleOfWheel = nbTurnWheel * 360;
+    return angleOfWheel;
+
+ }
+  
+  
+  // Takes the rotation or internal ticks of Falcon Encoder and turn them to a
+  // travel distance. gear ratio A:1 means, 1/A.
+  public double ticksToPosition(double ticks, double wheelDiameter, double gearRatio) {
+     double nbTurnMotor = ticks / Constants.encoderTicksPerTurn;
+     double nbTurnWheel = nbTurnMotor * gearRatio;
+     double distanceTravel = nbTurnWheel * Math.PI * wheelDiameter;
+     return distanceTravel;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     System.out.println(getAngle());
+    System.out.println(getEncoderAngle(Constants.dtfrontleftmotorID));
+
   }
 }

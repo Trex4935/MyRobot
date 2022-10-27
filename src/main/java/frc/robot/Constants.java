@@ -38,5 +38,6 @@ public final class Constants {
     public static final int dtbackrightmotorID = 44;
     // Settings
     public static final double dtMaxSpeed = 1;
+    public static final double encoderTicksPerTurn = 2048;
 
 }
