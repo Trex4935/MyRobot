@@ -7,13 +7,17 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj.PS4Controller.Button;
+import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.c_Backwards;
 import frc.robot.commands.c_Forward;
+import frc.robot.commands.c_IfSmacknaForward;
 import frc.robot.commands.c_driveWithController;
+import frc.robot.commands.c_smackago;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -34,7 +38,7 @@ public class RobotContainer {
   private final c_driveWithController driveWithController;
 
   // Controller
-  //private static XboxController controller = new XboxController(0);
+  private static XboxController controller = new XboxController(0);
   private static Joystick arduino = new Joystick(0);
 
   /**
@@ -68,11 +72,9 @@ public class RobotContainer {
     // B
     // new JoystickButton(controller, XboxController.Button.kB.value).whenHeld(new
     // c_Forward(m_exampleSubsystem));
-    // Button 0 makes runs c_Forward when held, making the robot go forward
-    
-
-    //Button 1
-    new JoystickButton(arduino,1).whenHeld(new c_Backwards(m_exampleSubsystem));
+    new JoystickButton(arduino, 0).whenHeld(new c_Forward(m_exampleSubsystem));
+    // A
+    new JoystickButton(arduino, 1).whenHeld(new c_Backwards(m_exampleSubsystem));
   }
 
   /**
