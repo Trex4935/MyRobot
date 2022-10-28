@@ -11,6 +11,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.SPI;
 import frc.robot.Constants;
 
@@ -26,6 +30,10 @@ public class Drivetrain extends SubsystemBase {
   DifferentialDrive diffDrive;
 
   public static AHRS ahrs;
+
+  
+  SwerveDriveOdometry swerveOdo;
+  SwerveDriveKinematics swerveKin;
 
   /** Creates a new Drivetrain. */
   public Drivetrain() {
@@ -44,6 +52,10 @@ public class Drivetrain extends SubsystemBase {
     ahrs.calibrate();
     ahrs.reset();
 
+    // Declaring kinemathics, that means the wheel position on drive train
+    swerveKin = new SwerveDriveKinematics(Constants.frontleftWheelPos,Constants.frontrightWheelPos,Constants.backleftWheelPos,Constants.backrightWheelPos);
+    // Declaring Odometry, that means sensor value needed to updated swerve drive.
+    swerveOdo = new SwerveDriveOdometry(swerveKin , getAngleRotation(), new Pose2d()); //Need to change Pose2D to actual position of robot on the field.
   }
 
   /**
@@ -81,6 +93,12 @@ public class Drivetrain extends SubsystemBase {
     double angle = ahrs.getAngle();
     return angle;
   }
+
+    // Gets angle from gyro and returns it
+    public Rotation2d getAngleRotation() {
+      double angle = ahrs.getAngle();
+      return  new Rotation2d(angle/2*3.1416);
+    }
 
 /**
  * This method reset encoders

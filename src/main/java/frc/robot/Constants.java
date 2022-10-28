@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Translation2d;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean
@@ -39,6 +41,10 @@ public final class Constants {
     //Settings
     public static final double dtMaxSpeed = 1;
     public static final double encoderTicksPerTurn = 2048;
+    public static final Translation2d frontleftWheelPos = new Translation2d(0,0);
+    public static final Translation2d frontrightWheelPos = new Translation2d(1,0);
+    public static final Translation2d backleftWheelPos = new Translation2d(0,-1);
+    public static final Translation2d backrightWheelPos = new Translation2d(1,-1);
 
 
 }
