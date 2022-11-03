@@ -39,7 +39,7 @@ public class RobotContainer {
 
   // Controller
   private static XboxController controller = new XboxController(0);
-  private static Joystick arduino = new Joystick(0);
+  private static Joystick arduino = new Joystick(1);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -72,9 +72,9 @@ public class RobotContainer {
     // B
     // new JoystickButton(controller, XboxController.Button.kB.value).whenHeld(new
     // c_Forward(m_exampleSubsystem));
-    new JoystickButton(arduino, 0).whenHeld(new c_Forward(m_exampleSubsystem));
+    new JoystickButton(arduino, 1).whenHeld(new c_Forward(m_exampleSubsystem));
     // A
-    new JoystickButton(arduino, 1).whenHeld(new c_Backwards(m_exampleSubsystem));
+    new JoystickButton(arduino, 2).whenHeld(new c_Backwards(m_exampleSubsystem));
   }
 
   /**

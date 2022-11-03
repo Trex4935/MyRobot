@@ -5,7 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.kauailabs.navx.frc.AHRS;
+//import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -25,7 +25,7 @@ public class Drivetrain extends SubsystemBase {
 
   DifferentialDrive diffDrive;
 
-  public static AHRS ahrs;
+  //public static AHRS ahrs;
 
   /** Creates a new Drivetrain. */
   public Drivetrain() {
@@ -40,9 +40,9 @@ public class Drivetrain extends SubsystemBase {
 
     diffDrive = new DifferentialDrive(leftmotors, rightmotors);
 
-    ahrs = new AHRS(SPI.Port.kMXP);
-    ahrs.calibrate();
-    ahrs.reset();
+    //ahrs = new AHRS(SPI.Port.kMXP);
+    //ahrs.calibrate();
+    //ahrs.reset();
 
   }
 
@@ -77,14 +77,14 @@ public class Drivetrain extends SubsystemBase {
   }
 
   // Gets angle from gyro and returns it
-  public double getAngle() {
-    double angle = ahrs.getAngle();
-    return angle;
-  }
+  //public double getAngle() {
+    //double angle = ahrs.getAngle();
+    //return angle;
+  //}
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    System.out.println(getAngle());
+    //System.out.println(getAngle());
   }
 }
