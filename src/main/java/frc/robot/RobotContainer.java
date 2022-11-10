@@ -12,6 +12,7 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.c_Backwards;
 import frc.robot.commands.c_Forward;
 import frc.robot.commands.c_IfSmacknaForward;
+import frc.robot.commands.c_Stop;
 import frc.robot.commands.c_driveWithController;
 import frc.robot.commands.c_smackago;
 import frc.robot.subsystems.Drivetrain;
@@ -39,7 +40,7 @@ public class RobotContainer {
 
   // Controller
   private static XboxController controller = new XboxController(0);
-  private static Joystick arduino = new Joystick(1);
+  public static Joystick arduino = new Joystick(1);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -75,6 +76,8 @@ public class RobotContainer {
     new JoystickButton(arduino, 1).whenHeld(new c_Forward(m_exampleSubsystem));
     // A
     new JoystickButton(arduino, 2).whenHeld(new c_Backwards(m_exampleSubsystem));
+
+    new JoystickButton(arduino, 3).whenHeld(new c_Stop(m_exampleSubsystem), false);
   }
 
   /**
