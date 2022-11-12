@@ -14,6 +14,7 @@ import frc.robot.commands.c_Forward;
 import frc.robot.commands.c_IfSmacknaForward;
 import frc.robot.commands.c_Stop;
 import frc.robot.commands.c_driveWithController;
+import frc.robot.commands.c_driveWithJoystick;
 import frc.robot.commands.c_smackago;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -37,6 +38,7 @@ public class RobotContainer {
 
   // Commands
   private final c_driveWithController driveWithController;
+  private final c_driveWithJoystick driveWithJoystick;
 
   // Controller
   private static XboxController controller = new XboxController(0);
@@ -53,6 +55,8 @@ public class RobotContainer {
 
     driveWithController = new c_driveWithController(driveTrain, controller);
 
+    driveWithJoystick = new c_driveWithJoystick(driveTrain, arduino);
+
     // Defaults
     driveTrain.setDefaultCommand(driveWithController);
 
@@ -64,7 +68,7 @@ public class RobotContainer {
    * Use this method to define your button->command mappings. Buttons can be
    * created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
+   * edu.wpi.first.wpilibj.Joystick} or {@link Joystick}), and then passing
    * it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
