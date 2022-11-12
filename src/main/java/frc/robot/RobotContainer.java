@@ -5,12 +5,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.c_Backwards;
 import frc.robot.commands.c_Forward;
 import frc.robot.commands.c_IfSmacknaForward;
+import frc.robot.commands.c_Stop;
 import frc.robot.commands.c_driveWithController;
 import frc.robot.commands.c_smackago;
 import frc.robot.subsystems.Drivetrain;
@@ -38,23 +40,22 @@ public class RobotContainer {
 
   // Controller
   private static XboxController controller = new XboxController(0);
+  public static Joystick arduino = new Joystick(1);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    //Subsystems
+    // Subsystems
     driveTrain = new Drivetrain();
 
     // Commands
 
-    driveWithController = new c_driveWithController(driveTrain,controller);
+    driveWithController = new c_driveWithController(driveTrain, controller);
 
     // Defaults
     driveTrain.setDefaultCommand(driveWithController);
 
-
-    
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -70,16 +71,13 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     // B
-    new JoystickButton(controller, XboxController.Button.kB.value).whenHeld(new c_Forward(m_exampleSubsystem));
-
+    // new JoystickButton(controller, XboxController.Button.kB.value).whenHeld(new
+    // c_Forward(m_exampleSubsystem));
+    new JoystickButton(arduino, 1).whenHeld(new c_Forward(m_exampleSubsystem));
     // A
-    // new JoystickButton(controller, XboxController.Button.kA.value).whenHeld(new
-    // c_Backwards(m_exampleSubsystem));
-    new JoystickButton(controller, XboxController.Button.kA.value).whenHeld(new c_IfSmacknaForward(m_exampleSubsystem));
+    new JoystickButton(arduino, 2).whenHeld(new c_Backwards(m_exampleSubsystem));
 
-    // Y
-    new JoystickButton(controller, XboxController.Button.kY.value).whenPressed(new c_smackago(m_exampleSubsystem));
-
+    new JoystickButton(arduino, 3).whenHeld(new c_Stop(m_exampleSubsystem), false);
   }
 
   /**
