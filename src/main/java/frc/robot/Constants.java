@@ -31,30 +31,28 @@ public final class Constants {
     public static final int motor2ID = 2;
     public static final int motor3ID = 3;
     public static final int motor4ID = 4;
-    
 
     // Drive Train
-    //Motors Drive;
-    public static final int dtfrontleftmotorID = 11;
+    // Motors Drive;
+    public static final int dtfrontleftmotorID = 1;
     public static final int dtfrontrightmotorID = 22;
     public static final int dtbackleftmotorID = 33;
     public static final int dtbackrightmotorID = 44;
 
-    //MotorTurn
-    public static final int turnfrontleftmotorID = 16;
+    // MotorTurn
+    public static final int turnfrontleftmotorID = 2;
     public static final int turnfrontrightmotorID = 28;
     public static final int turnbackleftmotorID = 36;
-    public static final int turnbackrightmotorID= 48;
-    //Settings
+    public static final int turnbackrightmotorID = 48;
+    // Settings
     public static final double dtMaxSpeed = 1;
     public static final double encoderTicksPerTurn = 2048;
     public static final double turnMotorGearRatio = 4;
     public static final double driveMotorGearRatio = 6;
     public static final double wheelDiameter = 6;
-    public static final Translation2d frontleftWheelPos = new Translation2d(0,0);
-    public static final Translation2d frontrightWheelPos = new Translation2d(1,0);
-    public static final Translation2d backleftWheelPos = new Translation2d(0,-1);
-    public static final Translation2d backrightWheelPos = new Translation2d(1,-1);
-
+    public static final Translation2d frontleftWheelPos = new Translation2d(0, 0);
+    public static final Translation2d frontrightWheelPos = new Translation2d(1, 0);
+    public static final Translation2d backleftWheelPos = new Translation2d(0, -1);
+    public static final Translation2d backrightWheelPos = new Translation2d(1, -1);
 
 }
