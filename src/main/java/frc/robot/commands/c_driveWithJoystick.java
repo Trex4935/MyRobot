@@ -9,12 +9,12 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
-public class c_driveWithController extends CommandBase {
+public class c_driveWithJoystick extends CommandBase {
   Drivetrain dt;
-  XboxController ctrl;
+  Joystick ctrl;
 
   /** Creates a new c_driveWithController. */
-  public c_driveWithController(Drivetrain driveTrain, XboxController newcontroller) {
+  public c_driveWithJoystick(Drivetrain driveTrain, Joystick newcontroller) {
     dt = driveTrain;
     ctrl = newcontroller;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -29,7 +29,7 @@ public class c_driveWithController extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    dt.driveWithController(ctrl);
+    // dt.driveWithController(ctrl);
   }
 
   // Called once the command ends or is interrupted.
