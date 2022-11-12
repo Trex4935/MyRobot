@@ -37,6 +37,22 @@ public class ExampleSubsystem extends SubsystemBase {
     motor4.set(0.5);
   }
 
+  // Moves the robot forward at a slower speed
+  public void SlowForward() {
+    motor1.set(0.2);
+    motor2.set(0.2);
+    motor3.set(0.2);
+    motor4.set(0.2);
+  }
+
+  // Moves the robot forward at a faster speed
+  public void FastForward() {
+    motor1.set(0.8);
+    motor2.set(0.8);
+    motor3.set(0.8);
+    motor4.set(0.8);
+  }
+
   // Moves the robot backwards
   public void Backwards() {
     motor1.set(-0.5);
