@@ -89,6 +89,10 @@ public class Drivetrain extends SubsystemBase {
 
   }
 
+  public void moveDriveMotor(XboxController controller) {
+    dtfrontleftmotor(Constants.motor1ID).set(controller.getRawAxis(Constants.leftAxisID));
+  }
+
   /**
    * This method controls the robot using the joystick
    * 
