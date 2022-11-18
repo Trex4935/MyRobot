@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import frc.robot.Constants;
 
@@ -58,7 +59,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   /**
-   * This method controls the robot using the joystick
+   * This method controls the robot using an Xbox joystick
    * 
    * @param controller
    */
@@ -66,6 +67,18 @@ public class Drivetrain extends SubsystemBase {
 
     diffDrive.tankDrive((controller.getRawAxis(Constants.leftAxisID)) * Constants.dtMaxSpeed,
         (controller.getRawAxis(Constants.rightAxisID)) * Constants.dtMaxSpeed);
+  }
+
+  /**
+   * This method controls the robot using an arduino joystick
+   * 
+   * @param arduino
+   */
+
+  public void driveWithJoystick(Joystick arduino) {
+
+    diffDrive.tankDrive((arduino.getRawAxis(Constants.leftAxisID)) * Constants.dtMaxSpeed,
+    (arduino.getRawAxis(Constants.rightAxisID))*Constants.dtMaxSpeed);
   }
 
   /**

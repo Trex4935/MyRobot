@@ -62,7 +62,8 @@ public class RobotContainer {
     driveWithJoystick = new c_driveWithJoystick(driveTrain, arduino);
 
     // Defaults
-    driveTrain.setDefaultCommand(driveWithController);
+      //driveTrain.setDefaultCommand(driveWithController);
+      driveTrain.setDefaultCommand(driveWithJoystick);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -90,7 +91,6 @@ public class RobotContainer {
     new JoystickButton(arduino, 4).whenHeld(new c_FastForward(m_exampleSubsystem), false);
 
     new JoystickButton(arduino, 4).whenInactive(new c_SlowForward(m_exampleSubsystem), true);
-
   }
 
   /**

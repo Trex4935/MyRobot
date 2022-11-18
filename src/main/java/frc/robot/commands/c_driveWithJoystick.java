@@ -5,18 +5,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
 public class c_driveWithJoystick extends CommandBase {
   Drivetrain dt;
-  Joystick ctrl;
+  Joystick ard;
 
   /** Creates a new c_driveWithController. */
-  public c_driveWithJoystick(Drivetrain driveTrain, Joystick newcontroller) {
+  public c_driveWithJoystick(Drivetrain driveTrain, Joystick arduino) {
     dt = driveTrain;
-    ctrl = newcontroller;
+    ard = arduino;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(dt);
   }
@@ -29,7 +28,7 @@ public class c_driveWithJoystick extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // dt.driveWithController(ctrl);
+   dt.driveWithJoystick(ard);
   }
 
   // Called once the command ends or is interrupted.
