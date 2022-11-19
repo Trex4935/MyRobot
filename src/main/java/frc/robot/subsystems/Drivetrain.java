@@ -23,7 +23,7 @@ public class Drivetrain extends SubsystemBase {
   MotorControllerGroup leftmotors;
   MotorControllerGroup rightmotors;
 
-  DifferentialDrive diffDrive;
+  
 
   public static AHRS ahrs;
 
@@ -38,7 +38,8 @@ public class Drivetrain extends SubsystemBase {
     leftmotors = new MotorControllerGroup(dtfrontleftmotor, dtbackleftmotor);
     rightmotors = new MotorControllerGroup(dtfrontrightmotor, dtbackrightmotor);
 
-    diffDrive = new DifferentialDrive(leftmotors, rightmotors);
+    
+    
 
     ahrs = new AHRS(SPI.Port.kMXP);
     ahrs.calibrate();
@@ -52,8 +53,11 @@ public class Drivetrain extends SubsystemBase {
    * @param speed
    */
   public void driveForward(int speed) {
-
-    diffDrive.tankDrive(speed, speed);
+    dtfrontleftmotor.set(0.5);
+    dtfrontrightmotor.set(0.5);
+    dtbackleftmotor.set(0.5);
+    dtbackrightmotor.set(0.5);
+    
 
   }
 
@@ -64,16 +68,14 @@ public class Drivetrain extends SubsystemBase {
    */
   public void driveWithController(XboxController controller) {
 
-    diffDrive.tankDrive((controller.getRawAxis(Constants.leftAxisID)) * Constants.dtMaxSpeed,
-        (controller.getRawAxis(Constants.rightAxisID)) * Constants.dtMaxSpeed);
+    
   }
 
   /**
    * This methods stops all motors
    */
   public void stopMotors() {
-    leftmotors.set(0);
-    rightmotors.set(0);
+   
   }
 
   // Gets angle from gyro and returns it
