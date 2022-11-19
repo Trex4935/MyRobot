@@ -34,16 +34,16 @@ public final class Constants {
 
     // Drive Train
     // Motors Drive;
-    public static final int dtfrontleftmotorID = 1;
-    public static final int dtfrontrightmotorID = 22;
-    public static final int dtbackleftmotorID = 33;
-    public static final int dtbackrightmotorID = 44;
+    public static final int dtfrontleftmotorID = 11;
+    public static final int dtfrontrightmotorID = 12;
+    public static final int dtbackleftmotorID = 13;
+    public static final int dtbackrightmotorID = 14;
 
     // MotorTurn
-    public static final int turnfrontleftmotorID = 2;
-    public static final int turnfrontrightmotorID = 28;
-    public static final int turnbackleftmotorID = 36;
-    public static final int turnbackrightmotorID = 48;
+    public static final int turnfrontleftmotorID = 1;
+    public static final int turnfrontrightmotorID = 2;
+    public static final int turnbackleftmotorID = 2;
+    public static final int turnbackrightmotorID = 4;
     // Settings
     public static final double dtMaxSpeed = 1;
     public static final double encoderTicksPerTurn = 2048;
