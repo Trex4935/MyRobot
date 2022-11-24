@@ -7,11 +7,12 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.SPI;
 import frc.robot.Constants;
 
 public class Drivetrain extends SubsystemBase {
@@ -20,12 +21,21 @@ public class Drivetrain extends SubsystemBase {
   WPI_TalonFX dtbackleftmotor;
   WPI_TalonFX dtbackrightmotor;
 
+
+  WPI_TalonFX turnfrontleftmotor;
+  WPI_TalonFX turnfrontrightmotor;
+  WPI_TalonFX turnbackleftmotor;
+  WPI_TalonFX turnbackrightmotor;
+
   MotorControllerGroup leftmotors;
   MotorControllerGroup rightmotors;
 
-  
+
 
   public static AHRS ahrs;
+
+
+  
 
   /** Creates a new Drivetrain. */
   public Drivetrain() {
@@ -115,9 +125,9 @@ public class Drivetrain extends SubsystemBase {
 
    // Takes the rotation or internal ticks of Falcon Encoder and turn them to a
   // travel distance. gear ratio A:1 means, 1/A.
-  public double ticksToAngle(double ticks, double gearRatio) {
+  public double ticksToAngle(double ticks) {
     double nbTurnMotor = ticks / Constants.encoderTicksPerTurn;
-    double nbTurnWheel = nbTurnMotor * gearRatio;
+    double nbTurnWheel = nbTurnMotor * Constants.turnMotorGearRatio;
     double angleOfWheel = nbTurnWheel * 360;
     return angleOfWheel;
 
@@ -126,10 +136,10 @@ public class Drivetrain extends SubsystemBase {
   
   // Takes the rotation or internal ticks of Falcon Encoder and turn them to a
   // travel distance. gear ratio A:1 means, 1/A.
-  public double ticksToPosition(double ticks, double wheelDiameter, double gearRatio) {
+  public double ticksToPosition(double ticks) {
      double nbTurnMotor = ticks / Constants.encoderTicksPerTurn;
-     double nbTurnWheel = nbTurnMotor * gearRatio;
-     double distanceTravel = nbTurnWheel * Math.PI * wheelDiameter;
+     double nbTurnWheel = nbTurnMotor * Constants.turnMotorGearRatio;
+     double distanceTravel = nbTurnWheel * Math.PI * Constants.wheelDiameter;
      return distanceTravel;
   }
 
