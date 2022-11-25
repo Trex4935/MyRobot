@@ -77,6 +77,6 @@ public class SwerveModule {
 
     // Gives back the distance of the drive motor and the angle of the turn motor, as a swerve Module state Object 
     public SwerveModuleState getModuleState(){
-        return new SwerveModuleState(getSpeed(),new Rotation2d(getAngle()/(2*3.1416)));
+        return new SwerveModuleState(getSpeed(),new Rotation2d(getAngle()/(2*Math.PI)));
     };
 }

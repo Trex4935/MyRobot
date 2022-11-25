@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.Constants;
 import frc.robot.extensions.SwerveModule;
 
@@ -65,19 +66,28 @@ public class Drivetrain extends SubsystemBase {
 
     
     
-
+    //Gyroscope
     ahrs = new AHRS(SPI.Port.kMXP);
     ahrs.calibrate();
     ahrs.reset();
 
     // Declare Swerve Module Class
     swerveModuleLF = new SwerveModule(dtfrontleftmotor,turnfrontleftmotor);
+    swerveModuleLB = new SwerveModule(dtbackleftmotor, turnbackleftmotor);
+    swerveModuleRF = new SwerveModule(dtfrontrightmotor, turnfrontrightmotor);
+    swerveModuleRB = new SwerveModule(dtbackrightmotor, turnbackrightmotor);
 
-    // Declaring kinemathics, that means the wheel position on drive train
+    // Declaring kinematics, that means the wheel position on drive train
     swerveKin = new SwerveDriveKinematics(Constants.frontleftWheelPos,Constants.frontrightWheelPos,Constants.backleftWheelPos,Constants.backrightWheelPos);
     // Declaring Odometry, that means sensor value needed to updated swerve drive.
     swerveOdo = new SwerveDriveOdometry(swerveKin , getAngleRotation(), new Pose2d()); //Need to change Pose2D to actual position of robot on the field.
   }
+
+  // ChassisSpeeds constructor (WIP)
+  public ChassisSpeeds chsSpeed = ChassisSpeeds.fromFieldRelativeSpeeds(0, 0, 0, getAngleRotation());
+
+  //Conversion
+  SwerveModuleState[] moduleStates = swerveKin.toSwerveModuleStates(chsSpeed);
 
   /**
    * Method that drives forward at same speed
