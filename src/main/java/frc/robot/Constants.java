@@ -44,7 +44,11 @@ public final class Constants {
     public static final int turnfrontleftmotorID = 16;
     public static final int turnfrontrightmotorID = 28;
     public static final int turnbackleftmotorID = 36;
-    public static final int turnbackrightmotorID= 48;
+    public static final int turnbackrightmotorID = 48;
+
+    //Encoder Placeholders
+    public static final int absoluteEncoderID = 12;
+
     //Settings
     public static final double dtMaxSpeed = 1;
     public static final double encoderTicksPerTurn = 2048;

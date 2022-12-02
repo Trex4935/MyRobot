@@ -4,18 +4,39 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Encoder;
 import frc.robot.Constants;
 
 public class SwerveModule {
+    //Motors
     WPI_TalonFX driveMotor;
     WPI_TalonFX turnMotor;
-    
 
-    public SwerveModule( WPI_TalonFX dMotor, WPI_TalonFX tMotor ) {
+    //Encoders
+    Encoder driveEncoder;
+    Encoder turnEncoder;
+
+    AnalogInput absoluteEncoder;
+    boolean absoluteEncoderReversed;
+    double absoluteEncoderOffsetRad;
+
+
+
+    public SwerveModule(WPI_TalonFX dMotor, WPI_TalonFX tMotor, boolean driveMotorReversed, boolean turnMotorReversed, AnalogInput absoluteEncoder, double absoluteEncoderOffset, boolean absoluteEncoderReversed) {
 
         driveMotor = dMotor;
         turnMotor = tMotor;
+
+        this.absoluteEncoderOffsetRad = absoluteEncoderOffset;
+        this.absoluteEncoderReversed = absoluteEncoderReversed;
+        absoluteEncoder = new AnalogInput(Constants.absoluteEncoderID);
+
+        //Placeholders
+        driveMotor = new WPI_TalonFX(Constants.dtbackleftmotorID);
+        turnMotor = new WPI_TalonFX(Constants.turnbackleftmotorID);
+
+
 
     }
 

@@ -72,10 +72,10 @@ public class Drivetrain extends SubsystemBase {
     ahrs.reset();
 
     // Declare Swerve Module Class
-    swerveModuleLF = new SwerveModule(dtfrontleftmotor,turnfrontleftmotor);
-    swerveModuleLB = new SwerveModule(dtbackleftmotor, turnbackleftmotor);
-    swerveModuleRF = new SwerveModule(dtfrontrightmotor, turnfrontrightmotor);
-    swerveModuleRB = new SwerveModule(dtbackrightmotor, turnbackrightmotor);
+    swerveModuleLF = new SwerveModule(dtfrontleftmotor,turnfrontleftmotor, false, false, null, 0, false);
+    swerveModuleLB = new SwerveModule(dtbackleftmotor, turnbackleftmotor, false, false, null, 0, false);
+    swerveModuleRF = new SwerveModule(dtfrontrightmotor, turnfrontrightmotor, false, false, null, 0, false);
+    swerveModuleRB = new SwerveModule(dtbackrightmotor, turnbackrightmotor, false, false, null, 0, false);
 
     // Declaring kinematics, that means the wheel position on drive train
     swerveKin = new SwerveDriveKinematics(Constants.frontleftWheelPos,Constants.frontrightWheelPos,Constants.backleftWheelPos,Constants.backrightWheelPos);
