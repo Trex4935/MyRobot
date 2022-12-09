@@ -46,8 +46,11 @@ public final class Constants {
     public static final int turnbackleftmotorID = 36;
     public static final int turnbackrightmotorID = 48;
 
-    //Encoder Placeholders
+    //Absolute Encoder Placeholder
     public static final int absoluteEncoderID = 12;
+
+    //PID Controller-related
+    public static final double kPTurning = 0.4;
 
     //Settings
     public static final double dtMaxSpeed = 1;
@@ -55,6 +58,10 @@ public final class Constants {
     public static final double turnMotorGearRatio = 4;
     public static final double driveMotorGearRatio = 6;
     public static final double wheelDiameter = 6;
+    public static final double driveEncoderMeters = driveMotorGearRatio * wheelDiameter * Math.PI;
+    public static final double turnEncoderRadians = turnMotorGearRatio * 2 * Math.PI;
+    public static final double driveEncoderRPMMetersPerSec = driveEncoderMeters / 60;
+    public static final double turnEncoderRPMRadPerSec = turnEncoderRadians / 60;
     public static final Translation2d frontleftWheelPos = new Translation2d(0,0);
     public static final Translation2d frontrightWheelPos = new Translation2d(1,0);
     public static final Translation2d backleftWheelPos = new Translation2d(0,-1);

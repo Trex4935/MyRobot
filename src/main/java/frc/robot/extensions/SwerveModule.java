@@ -2,6 +2,7 @@ package frc.robot.extensions;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -13,14 +14,17 @@ public class SwerveModule {
     WPI_TalonFX driveMotor;
     WPI_TalonFX turnMotor;
 
-    //Encoders
+    //Encoders (Replace Encoder with actual encoders used)
     Encoder driveEncoder;
     Encoder turnEncoder;
 
+    //Absolute Encoder
     AnalogInput absoluteEncoder;
     boolean absoluteEncoderReversed;
     double absoluteEncoderOffsetRad;
 
+    //PID Controller (Change to Xbox controller later?)
+    PIDController turningPIDController;
 
 
     public SwerveModule(WPI_TalonFX dMotor, WPI_TalonFX tMotor, boolean driveMotorReversed, boolean turnMotorReversed, AnalogInput absoluteEncoder, double absoluteEncoderOffset, boolean absoluteEncoderReversed) {
@@ -36,8 +40,52 @@ public class SwerveModule {
         driveMotor = new WPI_TalonFX(Constants.dtbackleftmotorID);
         turnMotor = new WPI_TalonFX(Constants.turnbackleftmotorID);
 
+        driveMotor.setInverted(driveMotorReversed);
+        turnMotor.setInverted(turnMotorReversed);
+
+        //
+        driveEncoder = driveMotor.getEncoder();
+        turnEncoder = turnMotor.getEncoder();
+
+        //Need to add/change .set---ConversionFactor
+        driveEncoder.setPositionConversionFactor();
+        driveEncoder.setVelocityConversionFactor();
+        turnEncoder.setPositionConversionFactor();
+        turnEncoder.setVelocityConversionFactor();
+
+        //PID Controller
+        turningPIDController = new PIDController(Constants.kPTurning, 0, 0);
+        turningPIDController.enableContinuousInput(-Math.PI, Math.PI);
 
 
+    }
+
+
+    //Next four methods will probably change
+    public double getDrivePosition() {
+        return driveEncoder.getPosition();
+    }
+
+    public double getTurnPosition() {
+        return turnEncoder.getPosition();
+    }
+
+    public double getDriveVelocity() {
+        return driveEncoder.getVelocity();
+    }
+
+    public double getTurnVelocity() {
+        return driveEncoder.getVelocity();
+    }
+
+
+    /* Gives absolute encoder radians based on voltage and whether or not it is reversed.
+     * Need to replace getVoltage5V */
+    public double getAbsoluteEncoderRad() {
+        double angle = absoluteEncoder.getVoltage()/ controller.getVoltage5V();
+        angle *= 2.0 * Math.PI;
+        angle -= absoluteEncoderOffsetRad;
+        return angle * (absoluteEncoderReversed ? -1.0 : 1.0);
     }
 
     /**
@@ -45,6 +93,7 @@ public class SwerveModule {
      * @param selectedEncoder
      * @return value of selected encoder
      */
+    //Replace driveMotor w/ driveEncoder and turnMotor w/ turnEncoder?
     public double getDriveEncoderTicks( ){
         return driveMotor.getSelectedSensorPosition();
     }
