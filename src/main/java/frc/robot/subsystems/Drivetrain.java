@@ -11,8 +11,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.SPI;
 import frc.robot.Constants;
 
 public class Drivetrain extends SubsystemBase {
@@ -75,12 +73,13 @@ public class Drivetrain extends SubsystemBase {
    * @param arduino
    */
 
-  public void driveWithJoystick(Joystick arduino) {
+  /* 
+   public void driveWithJoystick(Joystick arduino) {
 
     diffDrive.tankDrive((arduino.getRawAxis(Constants.leftAxisID)) * Constants.dtMaxSpeed,
     (arduino.getRawAxis(Constants.rightAxisID))*Constants.dtMaxSpeed);
   }
-
+  */
   /**
    * This methods stops all motors
    */

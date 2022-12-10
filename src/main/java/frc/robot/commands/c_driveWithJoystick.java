@@ -6,18 +6,18 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.ExampleSubsystem;
 
 public class c_driveWithJoystick extends CommandBase {
-  Drivetrain dt;
+  ExampleSubsystem es;
   Joystick ard;
 
   /** Creates a new c_driveWithController. */
-  public c_driveWithJoystick(Drivetrain driveTrain, Joystick arduino) {
-    dt = driveTrain;
+  public c_driveWithJoystick(ExampleSubsystem exampleSubsystem, Joystick arduino) {
+    es = exampleSubsystem;
     ard = arduino;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(dt);
+    addRequirements(es);
   }
 
   // Called when the command is initially scheduled.
@@ -28,13 +28,13 @@ public class c_driveWithJoystick extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-   dt.driveWithJoystick(ard);
+   es.driveWithJoystick(ard);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    dt.stopMotors();
+    es.Stop();
   }
 
   // Returns true when the command should end.

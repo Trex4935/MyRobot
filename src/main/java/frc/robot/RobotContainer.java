@@ -59,7 +59,7 @@ public class RobotContainer {
 
     driveWithController = new c_driveWithController(driveTrain, controller);
 
-    driveWithJoystick = new c_driveWithJoystick(driveTrain, arduino);
+    driveWithJoystick = new c_driveWithJoystick(m_exampleSubsystem, arduino);
 
     // Defaults
       //driveTrain.setDefaultCommand(driveWithController);

@@ -7,6 +7,9 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -18,15 +21,25 @@ public class ExampleSubsystem extends SubsystemBase {
   DigitalInput smacka2;
   WPI_TalonFX motor4;
   DigitalInput smacka1;
+  
+  MotorControllerGroup altleftmotors;
+  MotorControllerGroup altrightmotors;
+
+  DifferentialDrive altDiffDrive;
 
   /** Creates a new ExampleSubsystem. */
   public ExampleSubsystem() {
     motor1 = new WPI_TalonFX(Constants.motor1ID);
-    motor2 = new WPI_TalonFX(2);
-    motor3 = new WPI_TalonFX(3);
+    motor2 = new WPI_TalonFX(Constants.motor2ID);
+    motor3 = new WPI_TalonFX(Constants.motor3ID);
+    motor4 = new WPI_TalonFX(Constants.motor4ID);
     smacka2 = new DigitalInput(2);
-    motor4 = new WPI_TalonFX(4);
     smacka1 = new DigitalInput(1);
+
+    altleftmotors = new MotorControllerGroup(motor1, motor3);
+    altrightmotors = new MotorControllerGroup(motor2, motor4);
+
+    altDiffDrive = new DifferentialDrive(altleftmotors, altrightmotors);
   }
 
   // Moves the robot forwards
@@ -73,6 +86,12 @@ public class ExampleSubsystem extends SubsystemBase {
     motor2.stopMotor();
     motor3.stopMotor();
     motor4.stopMotor();
+  }
+
+  public void driveWithJoystick(Joystick arduino) {
+
+    altDiffDrive.tankDrive((arduino.getRawAxis(Constants.leftAxisID)) * Constants.dtMaxSpeed,
+    (arduino.getRawAxis(Constants.rightAxisID))*Constants.dtMaxSpeed);
   }
 
   @Override
