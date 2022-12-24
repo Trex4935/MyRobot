@@ -31,21 +31,21 @@ public class SwerveModule {
     SparkMaxPIDController turningPIDController;
 
 // Creates a swerve module from the motors and the absolute encoder
-    public SwerveModule(WPI_TalonSRX dMotor, CANSparkMax tMotor, boolean driveMotorReversed, boolean turnMotorReversed, AnalogInput absoluteEncoder, double absoluteEncoderOffset, boolean absoluteEncoderReversed) {
+    public SwerveModule(int driveMotorID, int turnMotorID, boolean driveMotorReversed, boolean turnMotorReversed, int absoluteEncoderID, double absoluteEncoderOffset, boolean absoluteEncoderReversed) {
 
         //Motors
-        driveMotor = dMotor;
-        turnMotor = tMotor;
+        //driveMotor = dMotor;
+        //turnMotor = tMotor;
 
         this.absoluteEncoderOffsetRad = absoluteEncoderOffset;
         this.absoluteEncoderReversed = absoluteEncoderReversed;
 
         //Creates an absolute encoder object
-        absoluteEncoder = new AnalogInput(Constants.absoluteEncoderID);
+        absoluteEncoder = new AnalogInput(absoluteEncoderID);
 
         //Creates drive and turn motor objects
-        driveMotor = new WPI_TalonSRX(Constants.dtbackleftmotorID);
-        turnMotor = new CANSparkMax(Constants.turnbackleftmotorID, MotorType.kBrushless);
+        driveMotor = new WPI_TalonSRX(driveMotorID);
+        turnMotor = new CANSparkMax(turnMotorID, MotorType.kBrushless);
 
         driveMotor.setInverted(driveMotorReversed);
         turnMotor.setInverted(turnMotorReversed);

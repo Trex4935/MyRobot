@@ -84,10 +84,10 @@ public class Drivetrain extends SubsystemBase {
 
 
     // Declare Swerve Module Class
-    swerveModuleLF = new SwerveModule(dtfrontleftmotor, turnfrontleftmotor, false, false, absoluteEncoder, 0, false);
-    swerveModuleLB = new SwerveModule(dtbackleftmotor, turnbackleftmotor, false, false, absoluteEncoder, 0, false);
-    swerveModuleRF = new SwerveModule(dtfrontrightmotor, turnfrontrightmotor, false, false, absoluteEncoder, 0, false);
-    swerveModuleRB = new SwerveModule(dtbackrightmotor, turnbackrightmotor, false, false, absoluteEncoder, 0, false);
+    swerveModuleLF = new SwerveModule(Constants.dtfrontleftmotorID, Constants.turnfrontleftmotorID, false, false, Constants.absoluteEncoderID, 0, false);
+    swerveModuleLB = new SwerveModule(Constants.dtbackleftmotorID, Constants.turnbackleftmotorID, false, false, Constants.absoluteEncoderID, 0, false);
+    swerveModuleRF = new SwerveModule(Constants.dtfrontrightmotorID, Constants.turnfrontrightmotorID, false, false, Constants.absoluteEncoderID, 0, false);
+    swerveModuleRB = new SwerveModule(Constants.dtfrontleftmotorID, Constants.turnbackrightmotorID, false, false, Constants.absoluteEncoderID, 0, false);
 
     // Declaring kinematics, that means the wheel position on drive train
     swerveKin = new SwerveDriveKinematics(Constants.frontleftWheelPos, Constants.frontrightWheelPos,
