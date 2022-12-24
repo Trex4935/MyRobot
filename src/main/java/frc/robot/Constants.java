@@ -5,6 +5,9 @@
 package frc.robot;
 
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -51,21 +54,40 @@ public final class Constants {
 
     //PID Controller-related
     public static final double kPTurning = 0.4;
+    public static final double kPxController = 0.4;
+    public static final double kPyController = 0.5;
+    public static final double kPtheta = 0.4;
 
+    //Constraints for profiled PID controller
+    public static final TrapezoidProfile.Constraints thetaConstraints =
+     new Constraints(Constants.dtMaxAngSpeed, Constants.dtMaxAngAcceleration);
     //Settings
     public static final double dtMaxSpeed = 1;
+    //Placeholder max angular speed
+    public static final double dtMaxAngSpeed = 2 * Math.PI;
+    //Placeholder max acceleration
+    public static final double dtMaxAcceleration = 1;
+    //Placeholder max angular acceleration
+    public static final double dtMaxAngAcceleration = 1;
     public static final double encoderTicksPerTurn = 2048;
     public static final double turnMotorGearRatio = 4;
     public static final double driveMotorGearRatio = 6;
     public static final double wheelDiameter = 6;
-    public static final double driveEncoderMeters = driveMotorGearRatio * wheelDiameter * Math.PI;
+    public static final double wheelRadius = wheelDiameter / 2;
+    //public static final double driveEncoderMeters = driveMotorGearRatio * wheelDiameter * Math.PI;
     public static final double turnEncoderRadians = turnMotorGearRatio * 2 * Math.PI;
-    public static final double driveEncoderRPMMetersPerSec = driveEncoderMeters / 60;
+    //public static final double driveEncoderRPMMetersPerSec = driveEncoderMeters / 60;
     public static final double turnEncoderRPMRadPerSec = turnEncoderRadians / 60;
+    //Placeholder deadband
+    public static final double deadband = 1;
     public static final Translation2d frontleftWheelPos = new Translation2d(0,0);
     public static final Translation2d frontrightWheelPos = new Translation2d(1,0);
     public static final Translation2d backleftWheelPos = new Translation2d(0,-1);
     public static final Translation2d backrightWheelPos = new Translation2d(1,-1);
+    
+    public static final SwerveDriveKinematics  driveKin = new SwerveDriveKinematics(
+        frontleftWheelPos, frontrightWheelPos, backleftWheelPos, backrightWheelPos
+    );
 
 
 }

@@ -5,13 +5,18 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -21,23 +26,25 @@ import frc.robot.Constants;
 import frc.robot.extensions.SwerveModule;
 
 public class Drivetrain extends SubsystemBase {
-  WPI_TalonFX dtfrontleftmotor;
-  WPI_TalonFX dtfrontrightmotor;
-  WPI_TalonFX dtbackleftmotor;
-  WPI_TalonFX dtbackrightmotor;
+  WPI_TalonSRX dtfrontleftmotor;
+  WPI_TalonSRX dtfrontrightmotor;
+  WPI_TalonSRX dtbackleftmotor;
+  WPI_TalonSRX dtbackrightmotor;
 
-  WPI_TalonFX turnfrontleftmotor;
-  WPI_TalonFX turnfrontrightmotor;
-  WPI_TalonFX turnbackleftmotor;
-  WPI_TalonFX turnbackrightmotor;
+  CANSparkMax turnfrontleftmotor;
+  CANSparkMax turnfrontrightmotor;
+  CANSparkMax turnbackleftmotor;
+  CANSparkMax turnbackrightmotor;
 
   MotorControllerGroup leftmotors;
   MotorControllerGroup rightmotors;
 
+  AnalogInput absoluteEncoder;
+
   public static AHRS ahrs;
 
   SwerveDriveOdometry swerveOdo;
-  SwerveDriveKinematics swerveKin;
+  public SwerveDriveKinematics swerveKin;
 
   SwerveModule swerveModuleLF;
   SwerveModule swerveModuleRF;
@@ -47,29 +54,40 @@ public class Drivetrain extends SubsystemBase {
   /** Creates a new Drivetrain. */
   public Drivetrain() {
     // Drive Motors
-    dtfrontleftmotor = new WPI_TalonFX(Constants.dtfrontleftmotorID);
-    dtfrontrightmotor = new WPI_TalonFX(Constants.dtfrontrightmotorID);
-    dtbackleftmotor = new WPI_TalonFX(Constants.dtbackleftmotorID);
-    dtbackrightmotor = new WPI_TalonFX(Constants.dtbackrightmotorID);
+    dtfrontleftmotor = new WPI_TalonSRX(Constants.dtfrontleftmotorID);
+    dtfrontrightmotor = new WPI_TalonSRX(Constants.dtfrontrightmotorID);
+    dtbackleftmotor = new WPI_TalonSRX(Constants.dtbackleftmotorID);
+    dtbackrightmotor = new WPI_TalonSRX(Constants.dtbackrightmotorID);
     // Turn Motors
-    turnfrontleftmotor = new WPI_TalonFX(Constants.turnfrontleftmotorID);
-    turnfrontrightmotor = new WPI_TalonFX(Constants.turnfrontrightmotorID);
-    turnbackleftmotor = new WPI_TalonFX(Constants.turnbackleftmotorID);
-    turnbackrightmotor = new WPI_TalonFX(Constants.turnbackrightmotorID);
+    turnfrontleftmotor = new CANSparkMax(Constants.turnfrontleftmotorID, MotorType.kBrushless);
+    turnfrontrightmotor = new CANSparkMax(Constants.turnfrontrightmotorID, MotorType.kBrushless);
+    turnbackleftmotor = new CANSparkMax(Constants.turnbackleftmotorID, MotorType.kBrushless);
+    turnbackrightmotor = new CANSparkMax(Constants.turnbackrightmotorID, MotorType.kBrushless);
 
     leftmotors = new MotorControllerGroup(dtfrontleftmotor, dtbackleftmotor);
     rightmotors = new MotorControllerGroup(dtfrontrightmotor, dtbackrightmotor);
 
+    absoluteEncoder = new AnalogInput(Constants.absoluteEncoderID);
+
     // Gyroscope
     ahrs = new AHRS(SPI.Port.kMXP);
     ahrs.calibrate();
-    ahrs.reset();
+    //ahrs.reset();
+
+    new Thread(() -> {
+      try {
+        Thread.sleep(1000);
+        ahrs.reset();
+      } catch (Exception e) {
+      }
+    }).start();
+
 
     // Declare Swerve Module Class
-    swerveModuleLF = new SwerveModule(dtfrontleftmotor, turnfrontleftmotor, false, false, null, 0, false);
-    swerveModuleLB = new SwerveModule(dtbackleftmotor, turnbackleftmotor, false, false, null, 0, false);
-    swerveModuleRF = new SwerveModule(dtfrontrightmotor, turnfrontrightmotor, false, false, null, 0, false);
-    swerveModuleRB = new SwerveModule(dtbackrightmotor, turnbackrightmotor, false, false, null, 0, false);
+    swerveModuleLF = new SwerveModule(dtfrontleftmotor, turnfrontleftmotor, false, false, absoluteEncoder, 0, false);
+    swerveModuleLB = new SwerveModule(dtbackleftmotor, turnbackleftmotor, false, false, absoluteEncoder, 0, false);
+    swerveModuleRF = new SwerveModule(dtfrontrightmotor, turnfrontrightmotor, false, false, absoluteEncoder, 0, false);
+    swerveModuleRB = new SwerveModule(dtbackrightmotor, turnbackrightmotor, false, false, absoluteEncoder, 0, false);
 
     // Declaring kinematics, that means the wheel position on drive train
     swerveKin = new SwerveDriveKinematics(Constants.frontleftWheelPos, Constants.frontrightWheelPos,
@@ -84,6 +102,14 @@ public class Drivetrain extends SubsystemBase {
 
   // Conversion
   SwerveModuleState[] moduleStates = swerveKin.toSwerveModuleStates(chsSpeed);
+
+  public void setModuleStates(SwerveModuleState[] desiredStates){
+    SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.dtMaxSpeed);
+    swerveModuleLF.setDesiredState(desiredStates[0]);
+    swerveModuleRF.setDesiredState(desiredStates[1]);
+    swerveModuleLB.setDesiredState(desiredStates[2]);
+    swerveModuleRB.setDesiredState(desiredStates[3]);
+  }
 
   /**
    * Method that drives forward at same speed
@@ -107,11 +133,24 @@ public class Drivetrain extends SubsystemBase {
 
   }
 
+  //Stops the modules
+  public void stopModules() {
+    swerveModuleLF.stop();
+    swerveModuleRF.stop();
+    swerveModuleLB.stop();
+    swerveModuleRB.stop();
+  }
+
   /**
    * This methods stops all motors
    */
   public void stopMotors() {
 
+  }
+
+  //Resets gyro
+  public void zeroHeading(){
+    ahrs.reset();
   }
 
   // Gets angle from gyro and returns it
@@ -120,10 +159,30 @@ public class Drivetrain extends SubsystemBase {
     return angle;
   }
 
+  /* Gyro angle method used in https://www.youtube.com/watch?v=0Xi9yb1IMyA :
+   * public double getHeading() {
+    return Math.IEEEremainder(ahrs.getAngle(), 360);
+  }
+  */
+
   // Gets angle from gyro and returns it
   public Rotation2d getAngleRotation() {
     double angle = ahrs.getAngle();
     return new Rotation2d(angle / (2 * Math.PI));
+  }
+
+    /* Rotation2d converter used in https://www.youtube.com/watch?v=0Xi9yb1IMyA :
+   * public double getRotation2d() {
+    return Rotation2d.fromDegrees(getHeading());
+  }
+  */
+
+  public Pose2d getPose() {
+    return swerveOdo.getPoseMeters();
+  }
+
+  public void resetOdometry(Pose2d pose){
+    swerveOdo.resetPosition(pose, getAngleRotation());
   }
 
   /**
@@ -183,7 +242,18 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    swerveOdo.update(getAngleRotation(),
+    swerveModuleLF.getModuleState(), swerveModuleRF.getModuleState(),
+    swerveModuleLB.getModuleState(), swerveModuleRB.getModuleState());
+
     System.out.println(getAngle());
+    /*Used in video
+    SmartDashboard.putNumber("Robot Heading", getAngle());
+    */
+    System.out.println("Robot Location: " + getPose().getTranslation().toString());
+    /*Used in video
+     *SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
+     */
     // Give encoder Ticks for left front motor
     System.out.println(getEncoderTicks(Constants.dtfrontleftmotorID));
     System.out.println(swerveModuleLF.getDriveEncoderTicks());
