@@ -4,7 +4,7 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+//import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -85,24 +85,27 @@ public class Drivetrain extends SubsystemBase {
 
     // Declare Swerve Module Class
     swerveModuleLF = new SwerveModule(Constants.dtfrontleftmotorID, Constants.turnfrontleftmotorID, false, false, Constants.absoluteEncoderID, 0, false);
-    swerveModuleLB = new SwerveModule(Constants.dtbackleftmotorID, Constants.turnbackleftmotorID, false, false, Constants.absoluteEncoderID, 0, false);
     swerveModuleRF = new SwerveModule(Constants.dtfrontrightmotorID, Constants.turnfrontrightmotorID, false, false, Constants.absoluteEncoderID, 0, false);
+    swerveModuleLB = new SwerveModule(Constants.dtbackleftmotorID, Constants.turnbackleftmotorID, false, false, Constants.absoluteEncoderID, 0, false);
     swerveModuleRB = new SwerveModule(Constants.dtfrontleftmotorID, Constants.turnbackrightmotorID, false, false, Constants.absoluteEncoderID, 0, false);
 
     // Declaring kinematics, that means the wheel position on drive train
     swerveKin = new SwerveDriveKinematics(Constants.frontleftWheelPos, Constants.frontrightWheelPos,
         Constants.backleftWheelPos, Constants.backrightWheelPos);
     // Declaring Odometry, that means sensor value needed to updated swerve drive.
-    swerveOdo = new SwerveDriveOdometry(swerveKin, getAngleRotation(), new Pose2d()); // Need to change Pose2D to actual
-                                                                                      // position of robot on the field.
+    swerveOdo = new SwerveDriveOdometry(swerveKin, getAngleRotation(), getPose());
   }
 
-  // ChassisSpeeds constructor (WIP)
-  public ChassisSpeeds chsSpeed = ChassisSpeeds.fromFieldRelativeSpeeds(0, 0, 0, getAngleRotation());
+  // ChassisSpeeds constructor
+  public ChassisSpeeds chsSpeed = ChassisSpeeds.fromFieldRelativeSpeeds(getVx(), getVy(), getOmegaRadiansPerSec(), getAngleRotation());
 
   // Conversion
   SwerveModuleState[] moduleStates = swerveKin.toSwerveModuleStates(chsSpeed);
 
+  /**
+   * Sets the modules to their desired states
+   * @param desiredStates
+   */
   public void setModuleStates(SwerveModuleState[] desiredStates){
     SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.dtMaxSpeed);
     swerveModuleLF.setDesiredState(desiredStates[0]);
@@ -133,7 +136,7 @@ public class Drivetrain extends SubsystemBase {
 
   }
 
-  //Stops the modules
+  /** Stops the modules */
   public void stopModules() {
     swerveModuleLF.stop();
     swerveModuleRF.stop();
@@ -148,12 +151,12 @@ public class Drivetrain extends SubsystemBase {
 
   }
 
-  //Resets gyro
+  /** Resets gyro */
   public void zeroHeading(){
     ahrs.reset();
   }
 
-  // Gets angle from gyro and returns it
+  //** Gets angle from gyro and returns it */
   public double getAngle() {
     double angle = ahrs.getAngle();
     return angle;
@@ -165,7 +168,7 @@ public class Drivetrain extends SubsystemBase {
   }
   */
 
-  // Gets angle from gyro and returns it
+  /** Gets angle from gyro and returns it */
   public Rotation2d getAngleRotation() {
     double angle = ahrs.getAngle();
     return new Rotation2d(angle / (2 * Math.PI));
@@ -177,10 +180,12 @@ public class Drivetrain extends SubsystemBase {
   }
   */
 
+  /** Returns the pose of the robot */
   public Pose2d getPose() {
     return swerveOdo.getPoseMeters();
   }
 
+  /** Resets the odometry */
   public void resetOdometry(Pose2d pose){
     swerveOdo.resetPosition(pose, getAngleRotation());
   }
@@ -216,12 +221,25 @@ public class Drivetrain extends SubsystemBase {
 
   }
 
-  // Get Turn Encoder Angle
+  /** Returns the x-velocity */
+  public double getVx() {
+    return ahrs.getVelocityX();
+  }
 
-  // Get Drive Encoder Speed
+  /** Returns the y-velocity */
+  public double getVy() {
+    return ahrs.getVelocityY();
+  }
 
-  // Takes the rotation or internal ticks of Falcon Encoder and turn them to a
-  // travel distance. gear ratio A:1 means, 1/A.
+  public double getOmegaRadiansPerSec() {
+    return ahrs.getRate() * Math.PI / 180;
+  }
+
+  /** Takes the rotation or internal ticks of Falcon Encoder and turn them to a
+  travel distance. gear ratio A:1 means, 1/A. 
+  *@param ticks
+  *@return angle
+  */
   public double ticksToAngle(double ticks) {
     double nbTurnMotor = ticks / Constants.encoderTicksPerTurn;
     double nbTurnWheel = nbTurnMotor * Constants.turnMotorGearRatio;
@@ -230,8 +248,11 @@ public class Drivetrain extends SubsystemBase {
 
   }
 
-  // Takes the rotation or internal ticks of Falcon Encoder and turn them to a
-  // travel distance. gear ratio A:1 means, 1/A.
+  /** Takes the rotation or internal ticks of Falcon Encoder and turn them to a
+  travel distance. gear ratio A:1 means, 1/A.
+  *@param ticks
+  *@return distance
+  */
   public double ticksToPosition(double ticks) {
     double nbTurnMotor = ticks / Constants.encoderTicksPerTurn;
     double nbTurnWheel = nbTurnMotor * Constants.turnMotorGearRatio;
